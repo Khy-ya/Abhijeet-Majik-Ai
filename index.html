@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Abhi's AI - Cybernetic Robotics Workspace</title>
+    <title>Abhi's AI - Cybernetic Workspace</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Marked.js for Markdown Rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        // Tailwind Custom Configuration for "Neon Blue & Cyber Black" Theme
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
                         cyber: {
-                            bg: '#05070B',        // Deep Cyber Black
-                            panel: '#0B0F17',     // Dark Obsidian Panel
-                            border: '#1E293B',    // Structural Steel Border
-                            neon: '#00D8FF',      // High-Voltage Neon Blue
-                            neonDim: '#005F73',   // Subdued Tech Blue
-                            glow: 'rgba(0, 216, 255, 0.15)'
+                            bg: '#000000',        // Absolute Pure Dark Black
+                            panel: '#050505',     // Obsidian Matte Black
+                            border: '#111827',    // Strict Low-Light Border
+                            neon: '#00F0FF',      // Pure High-Output Neon Blue
+                            glow: 'rgba(0, 240, 255, 0.2)'
                         }
                     }
                 }
@@ -29,7 +27,6 @@
         }
     </script>
     <style>
-        /* Custom scrollbar configurations for a clean look */
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
             height: 4px;
@@ -38,37 +35,35 @@
             background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #1E293B;
+            background: #111827;
             border-radius: 2px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #00D8FF;
+            background: #00F0FF;
         }
-        /* Markdown overrides for layout injection safety */
         .prose pre {
-            background-color: #0B0F17;
+            background-color: #050505;
             color: #E2E8F0;
             padding: 1rem;
             border-radius: 0.5rem;
             overflow-x: auto;
-            border: 1px solid #1E293B;
+            border: 1px solid #111827;
         }
         .prose code {
             font-family: monospace;
             font-size: 0.875rem;
-            color: #00D8FF;
+            color: #00F0FF;
         }
         .prose p { margin-bottom: 0.75rem; }
         .prose ul { list-style-type: disc; margin-left: 1.25rem; margin-bottom: 0.75rem; }
         .prose ol { list-style-type: decimal; margin-left: 1.25rem; margin-bottom: 0.75rem; }
         
-        /* Subtle glow effects for the neon interface */
         .neon-glow {
-            box-shadow: 0 0 15px rgba(0, 216, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
         }
         .neon-border-focus:focus-within {
-            border-color: #00D8FF;
-            box-shadow: 0 0 15px rgba(0, 216, 255, 0.25);
+            border-color: #00F0FF;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
         }
 
         body {
@@ -82,142 +77,103 @@
 </head>
 <body class="bg-cyber-bg text-slate-200 font-sans transition-colors duration-200 flex flex-col antialiased dark">
 
-    <!-- MAIN APP WRAPPER -->
     <div id="app-root" class="flex flex-1 overflow-hidden relative w-full h-full">
         
         <!-- SIDEBAR (Left Panel) -->
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-cyber-panel border-r border-cyber-border transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
-            <!-- Sidebar Header -->
             <div class="p-4 border-b border-cyber-border flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <div class="w-2.5 h-2.5 rounded-full bg-cyber-neon animate-pulse shadow-[0_0_8px_#00D8FF]"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-cyber-neon animate-pulse shadow-[0_0_8px_#00F0FF]"></div>
                     <span class="font-mono font-bold tracking-wider text-xs text-cyber-neon">SYS_STATUS: ACTIVE</span>
                 </div>
-                <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-lg hover:bg-slate-900 text-slate-400">
+                <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-lg hover:bg-neutral-900 text-slate-400">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
-            <!-- New Chat Action Button -->
             <div class="p-4">
-                <button onclick="createNewChat()" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-transparent border border-cyber-neon text-cyber-neon font-mono text-sm tracking-wide font-medium shadow-[0_0_10px_rgba(0,216,255,0.1)] hover:bg-cyber-neon hover:text-cyber-bg transition-all duration-200 group">
+                <button onclick="createNewChat()" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-transparent border border-cyber-neon text-cyber-neon font-mono text-sm tracking-wide font-medium shadow-[0_0_10px_rgba(0,240,255,0.1)] hover:bg-cyber-neon hover:text-cyber-bg transition-all duration-200 group">
                     <svg class="w-4 h-4 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     Assemble New Task
                 </button>
             </div>
 
-            <!-- Chat History Area -->
-            <div class="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar" id="chat-history-list">
-                <!-- Dynamically Rendered History Strips Go Here -->
-            </div>
+            <div class="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar" id="chat-history-list"></div>
 
-            <!-- Sidebar Bottom Configuration Panel -->
-            <div class="p-4 border-t border-cyber-border bg-black/30 space-y-1">
-                <button onclick="openModal('settings-modal')" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-cyber-neon hover:bg-slate-900 transition-colors font-mono text-xs">
+            <div class="p-4 border-t border-cyber-border bg-black/40 space-y-1">
+                <button onclick="openModal('settings-modal')" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-cyber-neon hover:bg-neutral-900 transition-colors font-mono text-xs">
                     <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     Engine Settings
                 </button>
             </div>
         </aside>
 
-        <!-- BACKDROP FOR MOBILE SIDEBAR -->
-        <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden md:hidden transition-opacity duration-300"></div>
+        <!-- BACKDROP FOR MOBILE -->
+        <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-30 hidden md:hidden transition-opacity duration-300"></div>
 
-        <!-- MAIN WORKSPACE CONTAINER -->
+        <!-- MAIN WORKSPACE -->
         <main class="flex-1 md:pl-72 flex flex-col h-full relative">
             
-            <!-- APPLICATION VIEWPORT TOP BAR -->
+            <!-- HEADER -->
             <header class="h-14 border-b border-cyber-border bg-cyber-bg/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-20">
                 <div class="flex items-center gap-3">
-                    <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded-lg border border-cyber-border hover:bg-slate-900 text-slate-300">
+                    <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded-lg border border-cyber-border hover:bg-neutral-900 text-slate-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                     <div>
                         <h1 class="font-mono font-black text-base tracking-wider text-white flex items-center gap-2">
-                            Abhi's AI <span class="text-[10px] py-0.5 px-1.5 bg-cyber-neon/10 text-cyber-neon border border-cyber-neon/20 rounded font-bold">v4.2-NEON</span>
+                            Abhi's AI <span class="text-[10px] py-0.5 px-1.5 bg-cyber-neon/10 text-cyber-neon border border-cyber-neon/20 rounded font-bold">v4.5</span>
                         </h1>
                     </div>
                 </div>
-                
-                <div class="flex items-center gap-2">
-                    <button onclick="openModal('prompt-modal')" class="p-1.5 text-slate-400 hover:text-cyber-neon hover:bg-slate-950 rounded-lg text-xs font-mono flex items-center gap-1.5 border border-cyber-border px-3">
-                        <svg class="w-3.5 h-3.5 text-cyber-neon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        <span>System Directive</span>
-                    </button>
-                </div>
             </header>
 
-            <!-- CHAT VIEWPORT LAYER -->
-            <div id="chat-viewport" class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 custom-scrollbar pb-36 max-w-4xl w-full mx-auto">
-                <!-- Message Nodes are dynamic entries inside this container -->
+            <!-- CHAT VIEWPORT -->
+            <div id="chat-viewport" class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 custom-scrollbar pb-32 max-w-4xl w-full mx-auto">
+                <!-- Dynamically injected messages appear here -->
             </div>
 
-            <!-- FLOATING INPUT INTERFACE ARCHITECTURE -->
+            <!-- FIXED BOTTOM INPUT CONSOLE -->
             <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-cyber-bg via-cyber-bg/95 to-transparent p-4 md:p-6 z-10">
                 <div class="max-w-3xl mx-auto relative">
-                    <div class="bg-cyber-panel border border-cyber-border rounded-xl shadow-2xl neon-border-focus transition-all overflow-hidden flex items-end">
-                        <textarea id="chat-input" rows="1" placeholder="Issue execution directive or workspace query..." class="w-full bg-transparent px-4 py-3.5 pr-14 text-sm text-white placeholder-slate-600 focus:outline-none resize-none custom-scrollbar min-h-[48px] max-h-[200px]" oninput="autoGrowInput(this)" onkeydown="handleInputKeydown(event)"></textarea>
+                    <div class="bg-cyber-panel border border-cyber-border rounded-xl shadow-2xl neon-border-focus transition-all overflow-hidden flex items-end mb-2">
+                        <textarea id="chat-input" rows="1" placeholder="Issue operational command..." class="w-full bg-transparent px-4 py-3.5 pr-14 text-sm text-white placeholder-slate-700 focus:outline-none resize-none custom-scrollbar min-h-[48px] max-h-[200px]" oninput="autoGrowInput(this)" onkeydown="handleInputKeydown(event)"></textarea>
                         
                         <div class="absolute right-2.5 bottom-2">
-                            <button id="send-btn" onclick="submitMessage()" class="p-2 bg-cyber-neon text-cyber-bg rounded-lg transition-all active:scale-95 disabled:opacity-20 disabled:pointer-events-none shadow-[0_0_10px_rgba(0,216,255,0.2)]" disabled>
+                            <button id="send-btn" onclick="submitMessage()" class="p-2 bg-cyber-neon text-cyber-bg rounded-lg transition-all active:scale-95 disabled:opacity-20 disabled:pointer-events-none shadow-[0_0_10px_rgba(0,240,255,0.2)]" disabled>
                                 <svg class="w-4 h-4 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             </button>
                         </div>
                     </div>
-                    <p class="text-center text-[10px] font-mono text-slate-600 mt-2">
-                        Core Target: <span id="active-model-lbl" class="text-cyber-neon">deepseek/deepseek-r1:free</span> • Directives deployed securely.
-                    </p>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- MODAL ARCHITECTURE WRAPPERS -->
-    <!-- 1. Engine Configuration Modal -->
-    <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <!-- ENGINE SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-cyber-panel border border-cyber-border rounded-xl max-w-md w-full p-6 shadow-2xl transition-all transform scale-95 opacity-0 duration-200" id="settings-modal-content">
             <h3 class="text-sm font-mono font-bold border-b border-cyber-border pb-3 mb-4 text-white flex items-center gap-2 tracking-wider">
-                <span class="w-2.5 h-2.5 bg-cyber-neon rounded-full shadow-[0_0_6px_#00D8FF]"></span> ENGINE CONFIGURATION
+                <span class="w-2.5 h-2.5 bg-cyber-neon rounded-full shadow-[0_0_6px_#00F0FF]"></span> ENGINE CONFIGURATION
             </h3>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-1">OpenRouter Access Token</label>
-                    <input type="password" id="setting-api-key" placeholder="sk-or-..." class="w-full px-3 py-2 bg-black/40 border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-neon font-mono">
+                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500 mb-1">OpenRouter Access Token</label>
+                    <input type="password" id="setting-api-key" placeholder="sk-or-..." class="w-full px-3 py-2 bg-black/60 border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-neon font-mono">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-1">Target Cluster Processing Model</label>
-                    <input type="text" id="setting-model" placeholder="deepseek/deepseek-r1:free" class="w-full px-3 py-2 bg-black/40 border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-neon font-mono">
+                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500 mb-1">Processing Model Target</label>
+                    <input type="text" id="setting-model" placeholder="deepseek/deepseek-r1:free" class="w-full px-3 py-2 bg-black/60 border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-neon font-mono">
                 </div>
             </div>
             <div class="mt-6 flex justify-end gap-2 text-xs font-mono">
-                <button onclick="closeModal('settings-modal')" class="px-4 py-2 border border-cyber-border text-slate-400 rounded-lg hover:bg-slate-900">Abort</button>
+                <button onclick="closeModal('settings-modal')" class="px-4 py-2 border border-cyber-border text-slate-400 rounded-lg hover:bg-neutral-950">Abort</button>
                 <button onclick="saveSettings()" class="px-4 py-2 bg-cyber-neon text-cyber-bg font-bold rounded-lg shadow-md">Commit Parameters</button>
             </div>
         </div>
     </div>
 
-    <!-- 2. Global System Prompt Modifier Modal -->
-    <div id="prompt-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-cyber-panel border border-cyber-border rounded-xl max-w-lg w-full p-6 shadow-2xl transition-all transform scale-95 opacity-0 duration-200" id="prompt-modal-content">
-            <h3 class="text-sm font-mono font-bold border-b border-cyber-border pb-3 mb-4 text-white tracking-wider">CORE OPERATING LOGIC MATRIX</h3>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-1">Global System Directives Behavioral Constraints</label>
-                    <textarea id="setting-system-prompt" rows="5" placeholder="Define boundaries, behavior matrix constraints..." class="w-full px-3 py-2 bg-black/40 border border-cyber-border rounded-lg text-xs text-slate-300 focus:outline-none focus:border-cyber-neon custom-scrollbar resize-none font-mono leading-relaxed"></textarea>
-                </div>
-            </div>
-            <div class="mt-6 flex justify-end gap-2 text-xs font-mono">
-                <button onclick="closeModal('prompt-modal')" class="px-4 py-2 border border-cyber-border text-slate-400 rounded-lg hover:bg-slate-900">Abort</button>
-                <button onclick="saveSystemPrompt()" class="px-4 py-2 bg-cyber-neon text-cyber-bg font-bold rounded-lg shadow-md">Inject Logic</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- CRITICAL TECH SAFETY PLACEMENT: SCRIPT TAG -->
-    <!-- ========================================== -->
     <script>
-        // State Engineering Object Engine
         let state = {
             chats: [],
             activeChatId: null,
@@ -227,46 +183,24 @@
             sidebarOpen: false
         };
 
-        // Welcome Interface Factory Configurator
-        const WELCOME_MESSAGE = `### 🦾 Core Engine Operational: Abhi's AI Online
-
-Welcome to the **Robotics & Work Workspace Layer**. Cybernetic diagnostic protocols verify all systems nominal. 
-
-I am processing inside a high-output workspace mode. Ready to ingest your architectural directives, code requirements, or computational problems. 
-
-**Available Mechanical Actions:**
-*   **System Prompt Customization:** Fine-tune my behaviors matrix via the top-bar button.
-*   **Engine Tuning:** Alter targeted OpenRouter processing targets in the configuration portal.
-
-*Standing by for instruction input down-link...*`;
-
-        // Direct Mount Initializer Initialization
         window.addEventListener('DOMContentLoaded', () => {
-            // Read State Layer
             state.apiKey = localStorage.getItem('abhi_ai_api_key') || '';
             state.model = localStorage.getItem('abhi_ai_model') || 'deepseek/deepseek-r1:free';
-            state.systemPrompt = localStorage.getItem('abhi_ai_system_prompt') || state.systemPrompt;
             
             try {
                 const savedChats = localStorage.getItem('abhi_ai_chats');
                 state.chats = savedChats ? JSON.parse(savedChats) : [];
             } catch (e) {
-                console.error("Corrupted history segment detected. Purging stack.", e);
                 state.chats = [];
             }
 
-            // Force strict dark mode styling globally
             document.documentElement.classList.add('dark');
 
-            // Synchronize Inputs Fields
             document.getElementById('setting-api-key').value = state.apiKey;
             document.getElementById('setting-model').value = state.model;
-            document.getElementById('setting-system-prompt').value = state.systemPrompt;
-            document.getElementById('active-model-lbl').textContent = state.model;
             
             updateInputState();
 
-            // Build Default Session Stack if zero states found
             if (state.chats.length === 0) {
                 createNewChat();
             } else {
@@ -276,15 +210,10 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             }
         });
 
-        // Dynamic State UI Sync Handlers
         function updateInputState() {
             const input = document.getElementById('chat-input');
             const btn = document.getElementById('send-btn');
-            if(input.value.trim().length > 0) {
-                btn.removeAttribute('disabled');
-            } else {
-                btn.setAttribute('disabled', 'true');
-            }
+            btn.disabled = input.value.trim().length === 0;
         }
 
         function autoGrowInput(element) {
@@ -300,7 +229,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             }
         }
 
-        // Operational Modals Controller Layer
         function openModal(modalId) {
             const el = document.getElementById(modalId);
             const content = document.getElementById(`${modalId}-content`);
@@ -324,14 +252,7 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             state.model = document.getElementById('setting-model').value.trim() || 'deepseek/deepseek-r1:free';
             localStorage.setItem('abhi_ai_api_key', state.apiKey);
             localStorage.setItem('abhi_ai_model', state.model);
-            document.getElementById('active-model-lbl').textContent = state.model;
             closeModal('settings-modal');
-        }
-
-        function saveSystemPrompt() {
-            state.systemPrompt = document.getElementById('setting-system-prompt').value.trim();
-            localStorage.setItem('abhi_ai_system_prompt', state.systemPrompt);
-            closeModal('prompt-modal');
         }
 
         function toggleSidebar() {
@@ -348,14 +269,11 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             }
         }
 
-        // Structural Chat Memory Engine Management
         function createNewChat() {
             const newChat = {
                 id: 'chat_' + Date.now(),
                 title: 'New Directive Module',
-                messages: [
-                    { role: 'assistant', content: WELCOME_MESSAGE }
-                ]
+                messages: []
             };
             state.chats.unshift(newChat);
             state.activeChatId = newChat.id;
@@ -389,7 +307,7 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             event.stopPropagation();
             const targetChat = state.chats.find(c => c.id === id);
             if (!targetChat) return;
-            const newTitle = prompt("Update operational module name tag:", targetChat.title);
+            const newTitle = prompt("Update module tag descriptor:", targetChat.title);
             if(newTitle && newTitle.trim().length > 0) {
                 targetChat.title = newTitle.trim();
                 saveChatsToStorage();
@@ -401,7 +319,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             localStorage.setItem('abhi_ai_chats', JSON.stringify(state.chats));
         }
 
-        // UI Pipeline Component Renders
         function renderSidebarHistory() {
             const container = document.getElementById('chat-history-list');
             container.innerHTML = '';
@@ -409,8 +326,8 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             state.chats.forEach(chat => {
                 const isActive = chat.id === state.activeChatId;
                 const activeClasses = isActive 
-                    ? 'bg-cyber-neon/5 text-cyber-neon border-cyber-neon/30 shadow-[0_0_8px_rgba(0,216,255,0.05)]' 
-                    : 'text-slate-400 border-transparent hover:bg-slate-900/50 hover:text-slate-200';
+                    ? 'bg-cyber-neon/5 text-cyber-neon border-cyber-neon/30' 
+                    : 'text-slate-400 border-transparent hover:bg-neutral-900 hover:text-slate-200';
                 
                 const element = document.createElement('div');
                 element.className = `flex items-center justify-between px-3 py-2.5 rounded-lg border text-sm font-medium cursor-pointer transition-all duration-150 ${activeClasses}`;
@@ -421,9 +338,9 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
                         <svg class="w-3.5 h-3.5 shrink-0 opacity-50 text-cyber-neon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                         <span class="truncate block text-left font-mono text-[11px] tracking-tight">${escapeHtml(chat.title)}</span>
                     </div>
-                    <div class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 dynamic-actions">
-                        <button onclick="renameChatPrompt('${chat.id}', event)" class="p-0.5 text-slate-500 hover:text-cyber-neon transition-colors" title="Rename"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></button>
-                        <button onclick="deleteChat('${chat.id}', event)" class="p-0.5 text-slate-500 hover:text-red-400 transition-colors" title="Purge"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                    <div class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100">
+                        <button onclick="renameChatPrompt('${chat.id}', event)" class="p-0.5 text-neutral-500 hover:text-cyber-neon transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></button>
+                        <button onclick="deleteChat('${chat.id}', event)" class="p-0.5 text-neutral-500 hover:text-red-400 transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
                     </div>
                 `;
                 
@@ -452,10 +369,10 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             wrapper.className = `flex w-full ${isUser ? 'justify-end' : 'justify-start'}`;
             
             const innerContainer = document.createElement('div');
-            innerContainer.className = `max-w-2xl flex gap-4 p-4 rounded-xl border ${isUser ? 'bg-cyber-neon/5 text-slate-200 border-cyber-neon/20 shadow-[0_0_15px_rgba(0,216,255,0.03)] ml-12' : 'bg-cyber-panel border-cyber-border mr-12'} w-fit`;
+            innerContainer.className = `max-w-2xl flex gap-4 p-4 rounded-xl border ${isUser ? 'bg-cyber-neon/5 text-slate-200 border-cyber-neon/20 ml-12' : 'bg-cyber-panel border-cyber-border mr-12'} w-fit`;
             
             const avatar = document.createElement('div');
-            avatar.className = `w-6 h-6 rounded flex items-center justify-center font-mono font-bold text-[10px] tracking-tighter border ${isUser ? 'bg-cyber-neon/10 text-cyber-neon border-cyber-neon/30' : 'bg-slate-900 text-slate-400 border-cyber-border'}`;
+            avatar.className = `w-6 h-6 rounded flex items-center justify-center font-mono font-bold text-[10px] tracking-tighter border ${isUser ? 'bg-cyber-neon/10 text-cyber-neon border-cyber-neon/30' : 'bg-neutral-900 text-slate-400 border-cyber-border'}`;
             avatar.innerText = isUser ? 'OP' : 'AI';
 
             const contentBlock = document.createElement('div');
@@ -477,14 +394,13 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             return wrapper;
         }
 
-        // Network Processing API Pipeline (OpenRouter Stream)
         async function submitMessage() {
             const inputField = document.getElementById('chat-input');
             const promptText = inputField.value.trim();
             if (!promptText) return;
 
             if (!state.apiKey) {
-                alert("ACCESS FAULT: Missing OpenRouter Engine Authorization Key. Check Engine Configuration Matrix.");
+                alert("ACCESS FAULT: Missing OpenRouter Authentication Engine Key.");
                 openModal('settings-modal');
                 return;
             }
@@ -494,7 +410,7 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
 
             activeChat.messages.push({ role: 'user', content: promptText });
             
-            if (activeChat.title === 'New Directive Module' && activeChat.messages.length === 2) {
+            if (activeChat.title === 'New Directive Module' && activeChat.messages.length === 1) {
                 activeChat.title = promptText.length > 26 ? promptText.substring(0, 26) + '...' : promptText;
             }
 
@@ -519,9 +435,7 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
                 apiMessages.push({ role: 'system', content: state.systemPrompt });
             }
             activeChat.messages.slice(0, -1).forEach(m => {
-                if(m.content !== WELCOME_MESSAGE) {
-                    apiMessages.push({ role: m.role, content: m.content });
-                }
+                apiMessages.push({ role: m.role, content: m.content });
             });
 
             try {
@@ -531,7 +445,7 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
                         'Authorization': `Bearer ${state.apiKey}`,
                         'Content-Type': 'application/json',
                         'HTTP-Referer': window.location.origin,
-                        'X-Title': 'Abhi AI Robotics Workspace'
+                        'X-Title': 'Abhi AI Architecture'
                     },
                     body: JSON.stringify({
                         model: state.model,
@@ -574,9 +488,7 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
                         }
                     }
                 }
-
                 saveChatsToStorage();
-
             } catch (networkError) {
                 console.error(networkError);
                 const stringifiedError = `\n\n\`\`\`\n[SYSTEM CRITICAL MATRIX FAULT]\n${networkError.message}\n\`\`\``;
