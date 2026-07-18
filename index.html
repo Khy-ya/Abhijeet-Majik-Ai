@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Abhi's AI - Robotics Workspace</title>
+    <title>Abhi's AI - Cybernetic Robotics Workspace</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Marked.js for Markdown Rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        // Tailwind Custom Configuration for "Work & Busy Robotics" Theme
+        // Tailwind Custom Configuration for "Neon Blue & Cyber Black" Theme
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        bot: {
-                            lightBg: '#f8fafc',
-                            darkBg: '#0f172a',
-                            lightPanel: '#ffffff',
-                            darkPanel: '#1e293b',
-                            industrial: '#f59e0b', // Industrial Orange
-                            steel: '#64748b' // Steel Blue Gray
+                        cyber: {
+                            bg: '#05070B',        // Deep Cyber Black
+                            panel: '#0B0F17',     // Dark Obsidian Panel
+                            border: '#1E293B',    // Structural Steel Border
+                            neon: '#00D8FF',      // High-Voltage Neon Blue
+                            neonDim: '#005F73',   // Subdued Tech Blue
+                            glow: 'rgba(0, 216, 255, 0.15)'
                         }
                     }
                 }
@@ -31,39 +31,46 @@
     <style>
         /* Custom scrollbar configurations for a clean look */
         .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 4px;
+            height: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
             background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
+            background: #1E293B;
+            border-radius: 2px;
         }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #475569;
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #00D8FF;
         }
         /* Markdown overrides for layout injection safety */
         .prose pre {
-            background-color: #1e293b;
-            color: #f8fafc;
+            background-color: #0B0F17;
+            color: #E2E8F0;
             padding: 1rem;
             border-radius: 0.5rem;
             overflow-x: auto;
-            margin: 0.5rem 0;
-        }
-        .dark .prose pre {
-            background-color: #0f172a;
+            border: 1px solid #1E293B;
         }
         .prose code {
             font-family: monospace;
             font-size: 0.875rem;
+            color: #00D8FF;
         }
         .prose p { margin-bottom: 0.75rem; }
         .prose ul { list-style-type: disc; margin-left: 1.25rem; margin-bottom: 0.75rem; }
         .prose ol { list-style-type: decimal; margin-left: 1.25rem; margin-bottom: 0.75rem; }
-        /* Keyboard safe layout helper */
+        
+        /* Subtle glow effects for the neon interface */
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(0, 216, 255, 0.15);
+        }
+        .neon-border-focus:focus-within {
+            border-color: #00D8FF;
+            box-shadow: 0 0 15px rgba(0, 216, 255, 0.25);
+        }
+
         body {
             min-height: 100vh;
             min-height: -webkit-fill-available;
@@ -73,28 +80,28 @@
         }
     </style>
 </head>
-<body class="bg-bot-lightBg dark:bg-bot-darkBg text-slate-800 dark:text-slate-100 font-sans transition-colors duration-200 flex flex-col antialiased">
+<body class="bg-cyber-bg text-slate-200 font-sans transition-colors duration-200 flex flex-col antialiased dark">
 
-    <!-- MAIN APP WRAPPER (Opens directly without loading screens) -->
+    <!-- MAIN APP WRAPPER -->
     <div id="app-root" class="flex flex-1 overflow-hidden relative w-full h-full">
         
         <!-- SIDEBAR (Left Panel) -->
-        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-white dark:bg-bot-darkPanel border-r border-slate-200 dark:border-slate-700 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-cyber-panel border-r border-cyber-border transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
             <!-- Sidebar Header -->
-            <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+            <div class="p-4 border-b border-cyber-border flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 rounded-full bg-amber-500 animate-pulse"></div>
-                    <span class="font-mono font-bold tracking-wider text-sm text-slate-500 dark:text-slate-400">SYS_STATUS: ACTIVE</span>
+                    <div class="w-2.5 h-2.5 rounded-full bg-cyber-neon animate-pulse shadow-[0_0_8px_#00D8FF]"></div>
+                    <span class="font-mono font-bold tracking-wider text-xs text-cyber-neon">SYS_STATUS: ACTIVE</span>
                 </div>
-                <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500">
+                <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-lg hover:bg-slate-900 text-slate-400">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
             <!-- New Chat Action Button -->
             <div class="p-4">
-                <button onclick="createNewChat()" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700 text-white font-medium shadow-sm transition-all duration-150 group">
-                    <svg class="w-5 h-5 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <button onclick="createNewChat()" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-transparent border border-cyber-neon text-cyber-neon font-mono text-sm tracking-wide font-medium shadow-[0_0_10px_rgba(0,216,255,0.1)] hover:bg-cyber-neon hover:text-cyber-bg transition-all duration-200 group">
+                    <svg class="w-4 h-4 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     Assemble New Task
                 </button>
             </div>
@@ -105,64 +112,60 @@
             </div>
 
             <!-- Sidebar Bottom Configuration Panel -->
-            <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 space-y-2">
-                <button onclick="openModal('settings-modal')" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-colors text-sm">
-                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <div class="p-4 border-t border-cyber-border bg-black/30 space-y-1">
+                <button onclick="openModal('settings-modal')" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-cyber-neon hover:bg-slate-900 transition-colors font-mono text-xs">
+                    <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     Engine Settings
-                </button>
-                <button onclick="toggleDarkMode()" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-colors text-sm">
-                    <svg id="dark-mode-icon" class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-                    <span id="dark-mode-text">Toggle Night Shift</span>
                 </button>
             </div>
         </aside>
 
         <!-- BACKDROP FOR MOBILE SIDEBAR -->
-        <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-30 hidden md:hidden transition-opacity duration-300"></div>
+        <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden md:hidden transition-opacity duration-300"></div>
 
         <!-- MAIN WORKSPACE CONTAINER -->
         <main class="flex-1 md:pl-72 flex flex-col h-full relative">
             
             <!-- APPLICATION VIEWPORT TOP BAR -->
-            <header class="h-16 border-b border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-bot-darkPanel/80 backdrop-blur-md flex items-center justify-between px-4 sticky top-0 z-20">
+            <header class="h-14 border-b border-cyber-border bg-cyber-bg/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-20">
                 <div class="flex items-center gap-3">
-                    <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded-lg border border-cyber-border hover:bg-slate-900 text-slate-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                     <div>
-                        <h1 class="font-mono font-black text-xl tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-                            Abhi's AI <span class="text-xs py-0.5 px-1.5 bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-md uppercase tracking-widest font-bold font-mono">v4.1</span>
+                        <h1 class="font-mono font-black text-base tracking-wider text-white flex items-center gap-2">
+                            Abhi's AI <span class="text-[10px] py-0.5 px-1.5 bg-cyber-neon/10 text-cyber-neon border border-cyber-neon/20 rounded font-bold">v4.2-NEON</span>
                         </h1>
                     </div>
                 </div>
                 
                 <div class="flex items-center gap-2">
-                    <button onclick="openModal('prompt-modal')" class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-sm font-mono flex items-center gap-1.5 border border-slate-200 dark:border-slate-700 px-3 py-1.5">
-                        <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        <span>System Prompt</span>
+                    <button onclick="openModal('prompt-modal')" class="p-1.5 text-slate-400 hover:text-cyber-neon hover:bg-slate-950 rounded-lg text-xs font-mono flex items-center gap-1.5 border border-cyber-border px-3">
+                        <svg class="w-3.5 h-3.5 text-cyber-neon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <span>System Directive</span>
                     </button>
                 </div>
             </header>
 
             <!-- CHAT VIEWPORT LAYER -->
-            <div id="chat-viewport" class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 custom-scrollbar pb-36">
+            <div id="chat-viewport" class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 custom-scrollbar pb-36 max-w-4xl w-full mx-auto">
                 <!-- Message Nodes are dynamic entries inside this container -->
             </div>
 
             <!-- FLOATING INPUT INTERFACE ARCHITECTURE -->
-            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-bot-lightBg via-bot-lightBg/95 to-transparent dark:from-bot-darkBg dark:via-bot-darkBg/95 p-4 md:p-6 z-10">
+            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-cyber-bg via-cyber-bg/95 to-transparent p-4 md:p-6 z-10">
                 <div class="max-w-3xl mx-auto relative">
-                    <div class="bg-white dark:bg-bot-darkPanel border border-slate-200 dark:border-slate-700/80 rounded-2xl shadow-xl focus-within:ring-2 focus-within:ring-amber-500/50 transition-all overflow-hidden">
-                        <textarea id="chat-input" rows="1" placeholder="Issue execution directive or operational question..." class="w-full bg-transparent px-4 py-4 pr-16 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none resize-none custom-scrollbar min-h-[56px] max-h-[200px]" oninput="autoGrowInput(this)" onkeydown="handleInputKeydown(event)"></textarea>
+                    <div class="bg-cyber-panel border border-cyber-border rounded-xl shadow-2xl neon-border-focus transition-all overflow-hidden flex items-end">
+                        <textarea id="chat-input" rows="1" placeholder="Issue execution directive or workspace query..." class="w-full bg-transparent px-4 py-3.5 pr-14 text-sm text-white placeholder-slate-600 focus:outline-none resize-none custom-scrollbar min-h-[48px] max-h-[200px]" oninput="autoGrowInput(this)" onkeydown="handleInputKeydown(event)"></textarea>
                         
-                        <div class="absolute right-3 bottom-3 flex items-center gap-2">
-                            <button id="send-btn" onclick="submitMessage()" class="p-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl transition-all shadow-md active:scale-95 disabled:opacity-40 disabled:pointer-events-none" disabled>
-                                <svg class="w-5 h-5 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        <div class="absolute right-2.5 bottom-2">
+                            <button id="send-btn" onclick="submitMessage()" class="p-2 bg-cyber-neon text-cyber-bg rounded-lg transition-all active:scale-95 disabled:opacity-20 disabled:pointer-events-none shadow-[0_0_10px_rgba(0,216,255,0.2)]" disabled>
+                                <svg class="w-4 h-4 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             </button>
                         </div>
                     </div>
-                    <p class="text-center text-[11px] font-mono text-slate-400 dark:text-slate-500 mt-2">
-                        Engine Active: <span id="active-model-lbl">deepseek/deepseek-r1:free</span> • Directives processed in global environments.
+                    <p class="text-center text-[10px] font-mono text-slate-600 mt-2">
+                        Core Target: <span id="active-model-lbl" class="text-cyber-neon">deepseek/deepseek-r1:free</span> • Directives deployed securely.
                     </p>
                 </div>
             </div>
@@ -171,41 +174,41 @@
 
     <!-- MODAL ARCHITECTURE WRAPPERS -->
     <!-- 1. Engine Configuration Modal -->
-    <div id="settings-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-bot-darkPanel border border-slate-200 dark:border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl transition-all transform scale-95 opacity-0 duration-200" id="settings-modal-content">
-            <h3 class="text-lg font-mono font-bold border-b border-slate-100 dark:border-slate-700 pb-3 mb-4 text-slate-900 dark:text-white flex items-center gap-2">
-                <span class="w-2.5 h-2.5 bg-amber-500 rounded-full"></span> ENGINE PARAMETERS
+    <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-cyber-panel border border-cyber-border rounded-xl max-w-md w-full p-6 shadow-2xl transition-all transform scale-95 opacity-0 duration-200" id="settings-modal-content">
+            <h3 class="text-sm font-mono font-bold border-b border-cyber-border pb-3 mb-4 text-white flex items-center gap-2 tracking-wider">
+                <span class="w-2.5 h-2.5 bg-cyber-neon rounded-full shadow-[0_0_6px_#00D8FF]"></span> ENGINE CONFIGURATION
             </h3>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-1">OpenRouter Access Key</label>
-                    <input type="password" id="setting-api-key" placeholder="sk-or-..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-1">OpenRouter Access Token</label>
+                    <input type="password" id="setting-api-key" placeholder="sk-or-..." class="w-full px-3 py-2 bg-black/40 border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-neon font-mono">
                 </div>
                 <div>
-                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-1">Target Processing Model</label>
-                    <input type="text" id="setting-model" placeholder="deepseek/deepseek-r1:free" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-1">Target Cluster Processing Model</label>
+                    <input type="text" id="setting-model" placeholder="deepseek/deepseek-r1:free" class="w-full px-3 py-2 bg-black/40 border border-cyber-border rounded-lg text-sm text-white focus:outline-none focus:border-cyber-neon font-mono">
                 </div>
             </div>
-            <div class="mt-6 flex justify-end gap-2">
-                <button onclick="closeModal('settings-modal')" class="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800">Abort</button>
-                <button onclick="saveSettings()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium shadow-sm">Commit Changes</button>
+            <div class="mt-6 flex justify-end gap-2 text-xs font-mono">
+                <button onclick="closeModal('settings-modal')" class="px-4 py-2 border border-cyber-border text-slate-400 rounded-lg hover:bg-slate-900">Abort</button>
+                <button onclick="saveSettings()" class="px-4 py-2 bg-cyber-neon text-cyber-bg font-bold rounded-lg shadow-md">Commit Parameters</button>
             </div>
         </div>
     </div>
 
     <!-- 2. Global System Prompt Modifier Modal -->
-    <div id="prompt-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-bot-darkPanel border border-slate-200 dark:border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl transition-all transform scale-95 opacity-0 duration-200" id="prompt-modal-content">
-            <h3 class="text-lg font-mono font-bold border-b border-slate-100 dark:border-slate-700 pb-3 mb-4 text-slate-900 dark:text-white">CORE OPERATING LOGIC</h3>
+    <div id="prompt-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-cyber-panel border border-cyber-border rounded-xl max-w-lg w-full p-6 shadow-2xl transition-all transform scale-95 opacity-0 duration-200" id="prompt-modal-content">
+            <h3 class="text-sm font-mono font-bold border-b border-cyber-border pb-3 mb-4 text-white tracking-wider">CORE OPERATING LOGIC MATRIX</h3>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-1">Global System Directives Matrix</label>
-                    <textarea id="setting-system-prompt" rows="5" placeholder="Define boundaries, behavior matrix constraints..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 custom-scrollbar resize-none"></textarea>
+                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-1">Global System Directives Behavioral Constraints</label>
+                    <textarea id="setting-system-prompt" rows="5" placeholder="Define boundaries, behavior matrix constraints..." class="w-full px-3 py-2 bg-black/40 border border-cyber-border rounded-lg text-xs text-slate-300 focus:outline-none focus:border-cyber-neon custom-scrollbar resize-none font-mono leading-relaxed"></textarea>
                 </div>
             </div>
-            <div class="mt-6 flex justify-end gap-2">
-                <button onclick="closeModal('prompt-modal')" class="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800">Abort</button>
-                <button onclick="saveSystemPrompt()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium shadow-sm">Inject Logic</button>
+            <div class="mt-6 flex justify-end gap-2 text-xs font-mono">
+                <button onclick="closeModal('prompt-modal')" class="px-4 py-2 border border-cyber-border text-slate-400 rounded-lg hover:bg-slate-900">Abort</button>
+                <button onclick="saveSystemPrompt()" class="px-4 py-2 bg-cyber-neon text-cyber-bg font-bold rounded-lg shadow-md">Inject Logic</button>
             </div>
         </div>
     </div>
@@ -221,14 +224,13 @@
             apiKey: '',
             model: 'deepseek/deepseek-r1:free',
             systemPrompt: 'You are Abhi\'s AI, a hyper-focused, incredibly efficient mechanical operative assistant working inside a busy corporate robotics production workspace. Your style is modern, technical, crisp, highly industrious, slightly robotic yet immensely helpful, optimized for heavy workflows and engineering tasks.',
-            darkMode: false,
             sidebarOpen: false
         };
 
         // Welcome Interface Factory Configurator
         const WELCOME_MESSAGE = `### 🦾 Core Engine Operational: Abhi's AI Online
 
-Welcome to the **Robotics & Work Workspace Layer**. System diagnostic protocols verify all systems nominal. 
+Welcome to the **Robotics & Work Workspace Layer**. Cybernetic diagnostic protocols verify all systems nominal. 
 
 I am processing inside a high-output workspace mode. Ready to ingest your architectural directives, code requirements, or computational problems. 
 
@@ -244,7 +246,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             state.apiKey = localStorage.getItem('abhi_ai_api_key') || '';
             state.model = localStorage.getItem('abhi_ai_model') || 'deepseek/deepseek-r1:free';
             state.systemPrompt = localStorage.getItem('abhi_ai_system_prompt') || state.systemPrompt;
-            state.darkMode = localStorage.getItem('abhi_ai_dark_mode') === 'true';
             
             try {
                 const savedChats = localStorage.getItem('abhi_ai_chats');
@@ -254,12 +255,8 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
                 state.chats = [];
             }
 
-            // Apply Viewport Dark Settings Mode
-            if (state.darkMode) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            // Force strict dark mode styling globally
+            document.documentElement.classList.add('dark');
 
             // Synchronize Inputs Fields
             document.getElementById('setting-api-key').value = state.apiKey;
@@ -337,23 +334,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             closeModal('prompt-modal');
         }
 
-        function toggleDarkMode() {
-            state.darkMode = !state.darkMode;
-            localStorage.setItem('abhi_ai_dark_mode', state.darkMode);
-            if(state.darkMode) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-            // Update Icon UI System
-            const icon = document.getElementById('dark-mode-icon');
-            if(state.darkMode) {
-                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M16.243 17.657l.707.707M6.343 6.343l.707-.707M14.5 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>`;
-            } else {
-                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>`;
-            }
-        }
-
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const backdrop = document.getElementById('sidebar-backdrop');
@@ -429,21 +409,21 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             state.chats.forEach(chat => {
                 const isActive = chat.id === state.activeChatId;
                 const activeClasses = isActive 
-                    ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30' 
-                    : 'text-slate-600 dark:text-slate-400 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60';
+                    ? 'bg-cyber-neon/5 text-cyber-neon border-cyber-neon/30 shadow-[0_0_8px_rgba(0,216,255,0.05)]' 
+                    : 'text-slate-400 border-transparent hover:bg-slate-900/50 hover:text-slate-200';
                 
                 const element = document.createElement('div');
-                element.className = `flex items-center justify-between px-3 py-3 rounded-xl border text-sm font-medium cursor-pointer transition-all duration-150 ${activeClasses}`;
+                element.className = `flex items-center justify-between px-3 py-2.5 rounded-lg border text-sm font-medium cursor-pointer transition-all duration-150 ${activeClasses}`;
                 element.setAttribute('onclick', `selectChat('${chat.id}')`);
                 
                 element.innerHTML = `
-                    <div class="flex items-center gap-2.5 overflow-hidden w-full mr-2">
-                        <svg class="w-4 h-4 shrink-0 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                        <span class="truncate block text-left font-mono text-xs tracking-tight">${escapeHtml(chat.title)}</span>
+                    <div class="flex items-center gap-2 overflow-hidden w-full mr-2">
+                        <svg class="w-3.5 h-3.5 shrink-0 opacity-50 text-cyber-neon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                        <span class="truncate block text-left font-mono text-[11px] tracking-tight">${escapeHtml(chat.title)}</span>
                     </div>
                     <div class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 dynamic-actions">
-                        <button onclick="renameChatPrompt('${chat.id}', event)" class="p-1 hover:text-amber-500 rounded transition-colors" title="Rename"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></button>
-                        <button onclick="deleteChat('${chat.id}', event)" class="p-1 hover:text-red-500 rounded transition-colors" title="Purge"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                        <button onclick="renameChatPrompt('${chat.id}', event)" class="p-0.5 text-slate-500 hover:text-cyber-neon transition-colors" title="Rename"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></button>
+                        <button onclick="deleteChat('${chat.id}', event)" class="p-0.5 text-slate-500 hover:text-red-400 transition-colors" title="Purge"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
                     </div>
                 `;
                 
@@ -469,17 +449,17 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
         function createMessageNode(role, text, index) {
             const isUser = role === 'user';
             const wrapper = document.createElement('div');
-            wrapper.className = `flex w-full ${isUser ? 'justify-end' : 'justify-start animate-fadeIn'}`;
+            wrapper.className = `flex w-full ${isUser ? 'justify-end' : 'justify-start'}`;
             
             const innerContainer = document.createElement('div');
-            innerContainer.className = `max-w-3xl flex gap-3 md:gap-4 p-4 rounded-2xl ${isUser ? 'bg-amber-500 text-white shadow-md ml-12' : 'bg-white dark:bg-bot-darkPanel border border-slate-100 dark:border-slate-800 shadow-sm mr-12'} transition-all w-fit`;
+            innerContainer.className = `max-w-2xl flex gap-4 p-4 rounded-xl border ${isUser ? 'bg-cyber-neon/5 text-slate-200 border-cyber-neon/20 shadow-[0_0_15px_rgba(0,216,255,0.03)] ml-12' : 'bg-cyber-panel border-cyber-border mr-12'} w-fit`;
             
             const avatar = document.createElement('div');
-            avatar.className = `w-7 h-7 rounded-lg shrink-0 flex items-center justify-center font-mono font-bold text-xs border ${isUser ? 'bg-amber-600 text-white border-amber-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700'}`;
+            avatar.className = `w-6 h-6 rounded flex items-center justify-center font-mono font-bold text-[10px] tracking-tighter border ${isUser ? 'bg-cyber-neon/10 text-cyber-neon border-cyber-neon/30' : 'bg-slate-900 text-slate-400 border-cyber-border'}`;
             avatar.innerText = isUser ? 'OP' : 'AI';
 
             const contentBlock = document.createElement('div');
-            contentBlock.className = `prose dark:prose-invert max-w-none text-sm leading-relaxed tracking-wide ${isUser ? 'text-white' : 'text-slate-800 dark:text-slate-200'}`;
+            contentBlock.className = `prose prose-invert max-w-none text-sm leading-relaxed tracking-wide text-slate-300`;
             
             if (isUser) {
                 contentBlock.innerText = text;
