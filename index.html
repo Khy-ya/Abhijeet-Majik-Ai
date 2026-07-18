@@ -75,14 +75,8 @@
 </head>
 <body class="bg-bot-lightBg dark:bg-bot-darkBg text-slate-800 dark:text-slate-100 font-sans transition-colors duration-200 flex flex-col antialiased">
 
-    <!-- CRITICAL SCRIPT SAFETY: Fallback Initializing Loader -->
-    <div id="loading-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-content-center bg-slate-900 text-white gap-4 flex justify-center items-center">
-        <div class="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
-        <div class="text-lg font-mono tracking-widest text-amber-500">INITIALIZING ROBOTIC CORE...</div>
-    </div>
-
-    <!-- MAIN APP WRAPPER (Hidden until JS mounts safely) -->
-    <div id="app-root" class="hidden flex flex-1 overflow-hidden relative w-full h-full">
+    <!-- MAIN APP WRAPPER (Opens directly without loading screens) -->
+    <div id="app-root" class="flex flex-1 overflow-hidden relative w-full h-full">
         
         <!-- SIDEBAR (Left Panel) -->
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-white dark:bg-bot-darkPanel border-r border-slate-200 dark:border-slate-700 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
@@ -244,57 +238,44 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
 
 *Standing by for instruction input down-link...*`;
 
-        // Deep-Safeguard Application Initializer Mount
+        // Direct Mount Initializer Initialization
         window.addEventListener('DOMContentLoaded', () => {
+            // Read State Layer
+            state.apiKey = localStorage.getItem('abhi_ai_api_key') || '';
+            state.model = localStorage.getItem('abhi_ai_model') || 'deepseek/deepseek-r1:free';
+            state.systemPrompt = localStorage.getItem('abhi_ai_system_prompt') || state.systemPrompt;
+            state.darkMode = localStorage.getItem('abhi_ai_dark_mode') === 'true';
+            
             try {
-                // Read State Layer
-                state.apiKey = localStorage.getItem('abhi_ai_api_key') || '';
-                state.model = localStorage.getItem('abhi_ai_model') || 'deepseek/deepseek-r1:free';
-                state.systemPrompt = localStorage.getItem('abhi_ai_system_prompt') || state.systemPrompt;
-                state.darkMode = localStorage.getItem('abhi_ai_dark_mode') === 'true';
-                
-                try {
-                    const savedChats = localStorage.getItem('abhi_ai_chats');
-                    state.chats = savedChats ? JSON.parse(savedChats) : [];
-                } catch (e) {
-                    console.error("Corrupted history segment detected. Purging stack.", e);
-                    state.chats = [];
-                }
+                const savedChats = localStorage.getItem('abhi_ai_chats');
+                state.chats = savedChats ? JSON.parse(savedChats) : [];
+            } catch (e) {
+                console.error("Corrupted history segment detected. Purging stack.", e);
+                state.chats = [];
+            }
 
-                // Apply Viewport Dark Settings Mode
-                if (state.darkMode) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
+            // Apply Viewport Dark Settings Mode
+            if (state.darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
 
-                // Synchronize Inputs Fields
-                document.getElementById('setting-api-key').value = state.apiKey;
-                document.getElementById('setting-model').value = state.model;
-                document.getElementById('setting-system-prompt').value = state.systemPrompt;
-                document.getElementById('active-model-lbl').textContent = state.model;
-                
-                updateInputState();
+            // Synchronize Inputs Fields
+            document.getElementById('setting-api-key').value = state.apiKey;
+            document.getElementById('setting-model').value = state.model;
+            document.getElementById('setting-system-prompt').value = state.systemPrompt;
+            document.getElementById('active-model-lbl').textContent = state.model;
+            
+            updateInputState();
 
-                // Build Default Session Stack if zero states found
-                if (state.chats.length === 0) {
-                    createNewChat();
-                } else {
-                    state.activeChatId = state.chats[0].id;
-                    renderSidebarHistory();
-                    renderActiveChatMessages();
-                }
-
-                // SAFE DISMISSAL OF LAUNCH SCREEN LAYER
-                document.getElementById('loading-screen').classList.add('hidden');
-                document.getElementById('app-root').classList.remove('hidden');
-            } catch (fatalInitError) {
-                document.getElementById('loading-screen').innerHTML = `
-                    <div class="text-red-500 font-mono text-center p-6">
-                        <h2 class="text-xl font-bold mb-2">SYSTEM INITIALIZATION FAILURE</h2>
-                        <p class="text-sm">${fatalInitError.toString()}</p>
-                    </div>
-                `;
+            // Build Default Session Stack if zero states found
+            if (state.chats.length === 0) {
+                createNewChat();
+            } else {
+                state.activeChatId = state.chats[0].id;
+                renderSidebarHistory();
+                renderActiveChatMessages();
             }
         });
 
@@ -466,7 +447,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
                     </div>
                 `;
                 
-                // Extra CSS wrapper injection because class inheritance groups
                 element.classList.add('group');
                 container.appendChild(element);
             });
@@ -494,7 +474,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             const innerContainer = document.createElement('div');
             innerContainer.className = `max-w-3xl flex gap-3 md:gap-4 p-4 rounded-2xl ${isUser ? 'bg-amber-500 text-white shadow-md ml-12' : 'bg-white dark:bg-bot-darkPanel border border-slate-100 dark:border-slate-800 shadow-sm mr-12'} transition-all w-fit`;
             
-            // Icon Identifier Badge Matrix
             const avatar = document.createElement('div');
             avatar.className = `w-7 h-7 rounded-lg shrink-0 flex items-center justify-center font-mono font-bold text-xs border ${isUser ? 'bg-amber-600 text-white border-amber-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700'}`;
             avatar.innerText = isUser ? 'OP' : 'AI';
@@ -505,11 +484,10 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             if (isUser) {
                 contentBlock.innerText = text;
             } else {
-                // Defensive Injection Parsing via Marked library
                 try {
                     contentBlock.innerHTML = marked.parse(text);
                 } catch (e) {
-                    contentBlock.innerText = text; // Fallback text formatting execution
+                    contentBlock.innerText = text;
                 }
             }
 
@@ -525,7 +503,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             const promptText = inputField.value.trim();
             if (!promptText) return;
 
-            // Authentication verification gate
             if (!state.apiKey) {
                 alert("ACCESS FAULT: Missing OpenRouter Engine Authorization Key. Check Engine Configuration Matrix.");
                 openModal('settings-modal');
@@ -535,10 +512,8 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             const activeChat = state.chats.find(c => c.id === state.activeChatId);
             if (!activeChat) return;
 
-            // Commit User Input to State
             activeChat.messages.push({ role: 'user', content: promptText });
             
-            // Auto-Generate title if default
             if (activeChat.title === 'New Directive Module' && activeChat.messages.length === 2) {
                 activeChat.title = promptText.length > 26 ? promptText.substring(0, 26) + '...' : promptText;
             }
@@ -549,7 +524,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             renderSidebarHistory();
             renderActiveChatMessages();
 
-            // Setup AI Response Node Layer Template in state
             const targetMessageIndex = activeChat.messages.length;
             activeChat.messages.push({ role: 'assistant', content: '' });
 
@@ -560,12 +534,10 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
 
             const textContentContainer = placeholderAiNode.querySelector('.prose');
 
-            // Build Network Package Matrix Payload
             const apiMessages = [];
             if(state.systemPrompt) {
                 apiMessages.push({ role: 'system', content: state.systemPrompt });
             }
-            // Maps and drops local welcome message layers out of remote API context logs
             activeChat.messages.slice(0, -1).forEach(m => {
                 if(m.content !== WELCOME_MESSAGE) {
                     apiMessages.push({ role: m.role, content: m.content });
@@ -613,20 +585,16 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
                             const token = parsedJson.choices?.[0]?.delta?.content || '';
                             if (token) {
                                 streamingBufferText += token;
-                                // Write to state memory directly
                                 activeChat.messages[targetMessageIndex].content = streamingBufferText;
-                                // Real-Time Terminal Markdown Rendering Engine Flush
                                 textContentContainer.innerHTML = marked.parse(streamingBufferText);
                                 scrollToBottom();
                             }
                         } catch (jsonErr) {
-                            // Non-critical parsing lines skip safely
                             continue;
                         }
                     }
                 }
 
-                // Stream finished successfully. Final Storage Commit
                 saveChatsToStorage();
 
             } catch (networkError) {
@@ -638,7 +606,6 @@ I am processing inside a high-output workspace mode. Ready to ingest your archit
             }
         }
 
-        // Essential Core Utility Architecture Tools
         function scrollToBottom() {
             const viewport = document.getElementById('chat-viewport');
             viewport.scrollTop = viewport.scrollHeight;
